@@ -10,7 +10,7 @@
 
 if (!defined('ABSPATH')) die();
 
-define("BACKUP_EMAIL","342agora@gmail.com");
+define("BACKUP_EMAIL","campanha342agora@gmail.com");
 
 function ds_ct_enqueue_parent() {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
