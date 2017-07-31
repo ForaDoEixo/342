@@ -207,6 +207,10 @@ class et_makepressure_result extends WP_Widget {
 		$email_negative="";
 		$email_neutral="";
 
+		$email_positive_count=0;
+		$email_negative_count=0;
+		$email_neutral_count=0;
+
 		foreach ($pas as $pa) {
 			$voto = get_post_meta($pa->ID,$instance["campaign"],true);
 			$com = wp_get_post_terms($pa->ID, "public_agent_commission");
@@ -222,11 +226,15 @@ class et_makepressure_result extends WP_Widget {
 				{
 					$pas_positive[]=$pa;
 				}
-				if (!empty($email_positive))
+				if ($email_positive_count < 100)
 				{
-					$email_positive .= ',';
+					if (!empty($email_positive))
+					{
+						$email_positive .= ',';
+					}
+					$email_positive .= $email;
+					$email_positive_count++;
 				}
-				$email_positive .= $email;
 			}
 			else if ($voto < 0)
 			{
@@ -239,11 +247,15 @@ class et_makepressure_result extends WP_Widget {
 				{
 					$pas_negative[]=$pa;
 				}
-				if (!empty($email_negative))
+				if ($email_negative_count < 100)
 				{
-					$email_negative .= ',';
+					if (!empty($email_negative))
+					{
+						$email_negative .= ',';
+					}
+					$email_negative .= $email;
+					$email_negative_count++;
 				}
-				$email_negative .= $email;
 			}
 			else
 			{
@@ -256,11 +268,15 @@ class et_makepressure_result extends WP_Widget {
 				{
 					$pas_neutral[]=$pa;
 				}
-				if (!empty($email_neutral))
+				if ($email_neutral_count < 100)
 				{
-					$email_neutral .= ',';
+					if (!empty($email_neutral))
+					{
+						$email_neutral .= ',';
+					}
+					$email_neutral .= $email;
+					$email_neutral_count++;
 				}
-				$email_neutral .= $email;
 
 			}
 		}
@@ -411,84 +427,84 @@ function makepressure_filter_func() {
 	ob_start();
 	?>
 	<style>
-	.highlight
-	{
+		.highlight
+		{
 		color: yellow !important;
 	}
 	.filter_wrap
 	{
-		text-align: center;
-	}
-	.filter_wrap .dashicons-search {
-		font-size: 32px;
-	}
-	.filter_wrap #agent_filter {
-		font-size: 22px;
-	}
-	</style>
-	<div class="filter_wrap"><input id="agent_filter" type="text" placeholder="Procure seu deputado"><span class="dashicons dashicons-search"></span></div>
-	<script>
+	text-align: center;
+}
+.filter_wrap .dashicons-search {
+font-size: 32px;
+}
+.filter_wrap #agent_filter {
+font-size: 22px;
+}
+</style>
+<div class="filter_wrap"><input id="agent_filter" type="text" placeholder="Procure seu deputado"><span class="dashicons dashicons-search"></span></div>
+<script>
 	jQuery.fn.highlight = function(pat) {
-		function innerHighlight(node, pat) {
-			var skip = 0;
-			if (node.nodeType == 3) {
-				var pos = node.data.toUpperCase().indexOf(pat);
-				pos -= (node.data.substr(0, pos).toUpperCase().length - node.data.substr(0, pos).length);
-				if (pos >= 0) {
-					var spannode = document.createElement('span');
-					spannode.className = 'highlight';
-					var middlebit = node.splitText(pos);
-					var endbit = middlebit.splitText(pat.length);
-					var middleclone = middlebit.cloneNode(true);
-					spannode.appendChild(middleclone);
-					middlebit.parentNode.replaceChild(spannode, middlebit);
-					skip = 1;
-				}
-			}
-			else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
-				for (var i = 0; i < node.childNodes.length; ++i) {
-					i += innerHighlight(node.childNodes[i], pat);
-				}
-			}
-			return skip;
-		}
-		return this.length && pat && pat.length ? this.each(function() {
-			innerHighlight(this, pat.toUpperCase());
-		}) : this;
-	};
+	function innerHighlight(node, pat) {
+	var skip = 0;
+	if (node.nodeType == 3) {
+	var pos = node.data.toUpperCase().indexOf(pat);
+	pos -= (node.data.substr(0, pos).toUpperCase().length - node.data.substr(0, pos).length);
+	if (pos >= 0) {
+	var spannode = document.createElement('span');
+	spannode.className = 'highlight';
+	var middlebit = node.splitText(pos);
+	var endbit = middlebit.splitText(pat.length);
+	var middleclone = middlebit.cloneNode(true);
+	spannode.appendChild(middleclone);
+	middlebit.parentNode.replaceChild(spannode, middlebit);
+	skip = 1;
+}
+}
+else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+for (var i = 0; i < node.childNodes.length; ++i) {
+i += innerHighlight(node.childNodes[i], pat);
+}
+}
+return skip;
+}
+return this.length && pat && pat.length ? this.each(function() {
+innerHighlight(this, pat.toUpperCase());
+}) : this;
+};
 
-	jQuery.fn.removeHighlight = function() {
-		return this.find("span.highlight").each(function() {
-			this.parentNode.firstChild.nodeName;
-			with (this.parentNode) {
-				replaceChild(this.firstChild, this);
-				normalize();
-			}
-		}).end();
-	};
+jQuery.fn.removeHighlight = function() {
+return this.find("span.highlight").each(function() {
+this.parentNode.firstChild.nodeName;
+with (this.parentNode) {
+replaceChild(this.firstChild, this);
+normalize();
+}
+}).end();
+};
 
 
-	</script>
-	<script>
+</script>
+<script>
 	jQuery.extend(jQuery.expr[":"], {
-		"containsNC": function(elem, i, match, array) {
-			return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-		}
-	});
-	jQuery("#agent_filter").on("change paste keyup", function()
-	{
-		var val = jQuery(this).val();
-		jQuery(".makepressure_grid_item").removeHighlight();
-		jQuery(".makepressure_grid_item:not(.empty)").hide();
-		jQuery(".makepressure_grid_item:containsNC('"+val+"')").show();
-		jQuery(".makepressure_grid_item").highlight(jQuery(this).val());
-	});
-	</script>
+	"containsNC": function(elem, i, match, array) {
+	return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+}
+});
+jQuery("#agent_filter").on("change paste keyup", function()
+{
+	var val = jQuery(this).val();
+	jQuery(".makepressure_grid_item").removeHighlight();
+	jQuery(".makepressure_grid_item:not(.empty)").hide();
+	jQuery(".makepressure_grid_item:containsNC('"+val+"')").show();
+	jQuery(".makepressure_grid_item").highlight(jQuery(this).val());
+});
+</script>
 
-	<?php
-	$string = ob_get_contents();
-	ob_end_clean();
-	return $string;
+<?php
+$string = ob_get_contents();
+ob_end_clean();
+return $string;
 }
 add_shortcode('make_pressure_current_filter', 'makepressure_filter_func');
 
