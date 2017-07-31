@@ -190,6 +190,7 @@ class et_makepressure_result extends WP_Widget {
 
 		$pas = get_posts(array(
 			'post_type' => 'public_agent',
+			'orderby' => 'rand',
 			'numberposts' => -1
 			));
 		$positive=0;
