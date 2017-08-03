@@ -316,8 +316,8 @@ class et_makepressure_result extends WP_Widget {
 					<div class="border-wrapper">
 						<div class="et_makepressure_result_text_wrapper">
 							<span class='et_makepressure_result_item_number'><a href="/ausente"><?php echo $neutral ?></a></span>
-							<span class='et_makepressure_result_item_text'></span>
 							<span class='et_makepressure_result_item_text'>AUSENTES</span>
+							<span class='et_makepressure_result_item_text'>&nbsp;</span>
 						</div>
 						<div class="links-wrapper"><a href="mailto:<?php echo $email_neutral.','.BACKUP_EMAIL.'?subject=' . get_option('makepressure_email_title') . '&body=' . get_option('makepressure_email_body'); ?>" class='et_makepressure_result_button placar'>FAÇA PRESSÃO<br/>MANDE UM RECADO</a><a href="https://mail.google.com/mail?view=cm&tf=0&to=<?php echo $email_neutral.','.BACKUP_EMAIL; ?>&su=<?php echo get_option('makepressure_email_title'); ?>&body=<?php echo get_option('makepressure_email_body'); ?>" target=_blank class="et_makepressure_result_button_gmail"">Usa Gmail? Clique aqui.</a></div></div>
 						<?php if (!$instance["single"]) { ?>
