@@ -93,7 +93,6 @@ function fb_opengraph()
 
 		else
 		{
-			$title = "Deputad".$genre_pronoun." ".$nome." (".strtoupper($party[0]->slug)."/".strtoupper($state[0]->slug).") está indecis".$genre_pronoun." sobre o julgamento de Temer!";
 			$desc = "Faça pressão, divulgue sua posição e saiba como irão votar os outros parlamentares #342agora";
 		}
 
@@ -316,7 +315,7 @@ class et_makepressure_result extends WP_Widget {
 				<div class='et_makepressure_result_item neutral'>
 					<div class="border-wrapper">
 						<div class="et_makepressure_result_text_wrapper">
-							<span class='et_makepressure_result_item_number'><a href="/indeciso"><?php echo $neutral ?></a></span>
+							<span class='et_makepressure_result_item_number'><a href="/ausente"><?php echo $neutral ?></a></span>
 							<span class='et_makepressure_result_item_text'>ESTÃO</span>
 							<span class='et_makepressure_result_item_text'>AUSENTES</span>
 						</div>
@@ -338,7 +337,7 @@ class et_makepressure_result extends WP_Widget {
 								}
 							}
 							?>
-							<div class="et_makepressure_result_agents_item more"><a href="/indeciso"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>VER TODOS</span></a></div>
+							<div class="et_makepressure_result_agents_item more"><a href="/ausente"><i class="fa fa-angle-double-right" aria-hidden="true"></i><span>VER TODOS</span></a></div>
 						</div>
 						<?php } ?>
 					</div>
