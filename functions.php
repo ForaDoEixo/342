@@ -282,7 +282,7 @@ class et_makepressure_result extends WP_Widget {
 		}
 		?>
 		<div class='et_makepressure_result_wrapper'>
-			<div class='et_makepressure_result_header'>CONFIRA O PLACAR ATUAL</div>
+			<div class='et_makepressure_result_header'>CONFIRA O PLACAR FINAL</div>
 			<div class='et_makepressure_result_item negative'>
 				<div class="border-wrapper">
 					<div class="et_makepressure_result_text_wrapper">
